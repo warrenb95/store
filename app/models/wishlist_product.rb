@@ -1,0 +1,6 @@
+class WishlistProduct < ApplicationRecord
+  belongs_to :product, counter_cache: :wishlist_count
+  belongs_to :wishlist, counter_cache: :products_wishlist
+
+  validates :product_id, uniqueness: { scope: :wishlist_id }
+end
