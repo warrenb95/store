@@ -19,14 +19,20 @@ Rails.application.routes.draw do
   namespace :store do
     resources :products
     resources :users
+    resources :wishlists
 
     root to: redirect("/store/products")
   end
 
   resources :products do
+    resource :wishlist, only: [ :create ], module: :products
     resources :subscribers, only: [ :create ]
   end
   resource :unsubscribe, only: [ :show ]
+
+  resources :wishlists do
+    resources :wishlist_products, only: [ :update, :destroy ], module: :wishlists
+  end
 
   namespace :settings do
     resource :email, only: [ :show, :update ]
